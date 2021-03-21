@@ -1,0 +1,7 @@
+from django.contrib import admin
+from Eishel_student_app.models import student_details,teacher_details
+
+# Register your models here.
+
+admin.site.register(student_details)
+admin.site.register(teacher_details)
