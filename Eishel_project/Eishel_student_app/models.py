@@ -14,12 +14,13 @@ class teacher_details(models.Model):
     tc_pass  = models.CharField(max_length=25)
     tc_clgname  = models.CharField(max_length=25)
 
-class exam_details(models,Model):
-    ex_sub  = models.CharField(max_length=25)
-    ex_name  = models.CharField(max_length=25)
-    ex_date  = models.CharField(max_length=)
-    ex_time  = models.CharField(max_length=)
-    ex_nost  = models.CharField(max_length=)
-    ex_noq  = models.CharField(max_length=)
-    ex_id  = models.CharField(max_length=)
-    ex_pass  = models.CharField(max_length=)
+class exam_details(models.Model):
+    ex_sub = models.CharField(max_length=25)
+    ex_name = models.CharField(max_length=25)
+    ex_date = models.DateField()
+    ex_time = models.TimeField()
+    ex_stu = models.IntegerField()
+    ex_marks = models.IntegerField()
+    ex_noq = models.IntegerField()
+    ex_id = models.CharField(max_length=25, primary_key=True)
+    ex_pass = models.CharField(max_length=25)

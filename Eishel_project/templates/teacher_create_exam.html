@@ -45,14 +45,14 @@
       
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="">Eishel</a>
+          <a class="navbar-brand" href="/">Eishel</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="">Home</a>
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
               </li>
             </ul>
           </div>
@@ -79,21 +79,22 @@
     <div class="row" data-aos="fade-up">
         
         <div class="col-md-9 pt-4">
-          <h3 class="icofont-check">Enter details carefully</h3>
+          <h3 class="icofont-check">Enter details carefully...</h3>
           .<br>
           .<br>
           .<br>
 
-          <form>
+          <form method="post">
             <!-- 2 column grid layout with text inputs for the first and last names -->
             
+            {% csrf_token %}
              <ol> 
                 
                 
-                <div class="form-outline mb-4">
-                  <input type="text" id="form6Example1" class="form-control" />
-                  <label class="form-label" for="form6Example1">Subject</label>
-                </div>
+            <div class="form-outline mb-4">
+              <input type="text" id="inputSubject" name="inputSubject" class="form-control" />
+              <label class="form-label" for="inputSubject">Subject</label>
+            </div>
                 
               
               
@@ -103,37 +104,47 @@
           
             <!-- Text input -->
             <div class="form-outline mb-4">
-              <input type="text" id="form6Example3" class="form-control" />
-              <label class="form-label" for="form6Example3">Enter name ( if any ) </label>
+              <input type="text" id="inputExamname" name="inputExamname" class="form-control" />
+              <label class="form-label" for="inputExamname">Enter name ( if any ) </label>
             </div>
           
             <!-- Text input -->
             <div class="form-outline mb-4">
-              <input type="date" id="form6Example4" class="form-control" />
-              <label class="form-label" for="form6Example4">Exam Date</label>
+              <input type="date" id="inputExamdate" name="inputExamdate" class="form-control" />
+              <label class="form-label" for="inputExamdate">Exam Date</label>
             </div>
           
             <!-- Email input -->
             <div class="form-outline mb-4">
-              <input type="time" id="form6Example5" class="form-control" />
-              <label class="form-label" for="form6Example5">Exam time</label>
+              <input type="time" id="inputExamtime" name="inputExamtime" class="form-control" />
+              <label class="form-label" for="inputExamtime">Exam time</label>
             </div>
           
             <!-- Number input -->
             <div class="form-outline mb-4">
-              <input type="number" id="form6Example6" class="form-control" />
-              <label class="form-label" for="form6Example6">Total students</label>
+              <input type="number" id="inputNostu" name="inputNostu" class="form-control" />
+              <label class="form-label" for="inputNostu">Total students</label>
             </div>
           
             <!-- Message input -->
             <div class="form-outline mb-4">
-                <input type="number" id="form6Example6" class="form-control" />
-              <label class="form-label" for="form6Example7">Total marks</label>
+                <input type="number" id="inputTotalmarks" name="inputTotalmarks" class="form-control" />
+              <label class="form-label" for="inputTotalmarks">Total marks</label>
             </div>
              
             <div class="form-outline mb-4">
-                <input type="number" id="form6Example6" class="form-control" />
-              <label class="form-label" for="form6Example7">No. of questions</label>
+                <input type="number" id="inputNoq" name="inputNoq" class="form-control" />
+              <label class="form-label" for="inputNoq">No. of questions</label>
+            </div>
+
+            <div class="form-outline mb-4">
+                <input type="text" id="inputExid" name="inputExid" class="form-control" />
+              <label class="form-label" for="inputExid">Exam id</label>
+            </div>
+
+            <div class="form-outline mb-4">
+                <input type="password" id="inputExpass" name="inputExpass" class="form-control" />
+              <label class="form-label" for="inputExpass">Exam password</label>
             </div>
              
             <!-- Checkbox -->
@@ -143,7 +154,7 @@
 <div class="row">
 
             <button type="submit" class="btn btn-primary btn-block mb-4">Generate questions</button>
-            <button type="submit" class="btn btn-primary btn-block mb-4">cancel</button>
+            <a class="btn btn-primary btn-block mb-4" href="/teacher_home">cancel</a>
 </div>     
         </ol>
              <br>

@@ -10,5 +10,6 @@ urlpatterns = [
     path("exam_login",views.exam_login, name="exam_login"),
     path("teacher_home",views.teacher_home, name="teacher_home"),
     path("create_exam",views.create_exam, name="create_exam"),
+    path("generate_questions",views.generate_questions, name="generate_questions")
 
 ]

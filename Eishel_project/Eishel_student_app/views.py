@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from Eishel_student_app.models import student_details, teacher_details
+from Eishel_student_app.models import student_details, teacher_details, exam_details
 
 # Create your views here.
 
@@ -62,7 +62,26 @@ def teacher_home(request):
     return render(request, 'teacher_home.html')
 
 def create_exam(request):
+    if request.method == "POST":
+        sub = request.POST.get('inputSubject')
+        name = request.POST.get('inputExamname')
+        date = request.POST.get('inputExamdate')
+        time = request.POST.get('inputExamtime')
+        stu = request.POST.get('inputNostu')
+        marks = request.POST.get('inputTotalmarks')
+        questions = request.POST.get('inputNoq')
+        exid = request.POST.get('inputExid')
+        password = request.POST.get('inputExpass')
+
+        exam_details_obj = exam_details(ex_sub=sub, ex_name=name, ex_date=date, ex_time=time, ex_stu=stu, ex_marks=marks, ex_noq=questions, ex_id=exid, ex_pass=password)
+        exam_details_obj.save()
+
+        return redirect('/generate_questions')
+
     return render(request, 'teacher_create_exam.html')
+
+def generate_questions(request):
+    return render(request, 'teacher_generate_questions.html')
 
 def exam_login(request):
     return render(request,  'exam_login.html')
