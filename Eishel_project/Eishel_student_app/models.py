@@ -24,3 +24,8 @@ class exam_details(models.Model):
     ex_noq = models.IntegerField()
     ex_id = models.CharField(max_length=25, primary_key=True)
     ex_pass = models.CharField(max_length=25)
+
+class ex_details(models.Model):
+    exm_id = models.CharField(max_length=25, default="exam_dbms", primary_key=True)
+    ex_q = models.CharField(max_length=100)
+    ex_q_marks = models.IntegerField()

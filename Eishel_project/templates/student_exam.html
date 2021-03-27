@@ -27,6 +27,38 @@
 
   <!-- Template Main CSS File -->static/
   <link href="static/assets/css/style.css" rel="stylesheet">
+  <script type="text/javascript">
+
+var countDownDate = new Date("Jan 5, 2022 15:37:25").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+    
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s ";
+    
+  // If the count down is over, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "EXPIRED";
+  }
+}, 1000);
+</script>
+
+
 
   <!-- =======================================================
   * Template Name: Moderna - v2.2.1
@@ -38,8 +70,13 @@
 
 <body>
 
+
+   
+
+
+
   <!-- ======= Header ======= -->
-    <header id="header" class="fixed-top header-transparent">
+ <header id="header" class="fixed-top header-transparent">
     <div class="container">
 
       
@@ -54,6 +91,8 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/">Home</a>
               </li>
+              
+              
             </ul>
           </div>
         </div>
@@ -62,12 +101,20 @@
       
 
     </div>
-  </header>
+  </header><!-- End Header -->
 
   <main id="main">
 
     <!-- ======= About Us Section ======= -->
-  
+
+   
+<br>
+<br>
+<br>
+<p>time left</p>
+         <p id="demo"></p>
+
+
 
   <!-- ======= Hero Section ======= -->
  <!-- End Hero -->
@@ -79,45 +126,70 @@
     <div class="row" data-aos="fade-up">
         
         <div class="col-md-9 pt-4">
-          <h3 class="icofont-check">Generate questions</h3>
+          <h3 class="ml-5">Your Exam is Live Now...<br>All the best...</h3>
           .<br>
           .<br>
           .<br>
 
-          <form method="post">
-          {% csrf_token %}
+          <form>
             <!-- 2 column grid layout with text inputs for the first and last names -->
             
              <ol> 
                 
                 
-               
-                
+                <form>
+                    <!-- 2 column grid layout with text inputs for the first and last names -->
+                   
+                   
+                     
+                    
+                   
+                    <div class="row mb-4">
+                        <div class="col-sm-9">
+                        <div class="form-outline mb-4">
+                        
+                        <label class="form-label" for="form6Example7">Question 1: What is transaction ? Explain the ACID properties of transaction.</label>
+                      </div>
+                        </div>
+                      <div class="row-mb">
+                        <div class="form-outline">
+                            
+                          <label class="form-label" for="form6Example2">Marks: 5</label>
+                        </div>
+
+                      </div>
+                    
+                    
+
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-sm-9">
+                        <div class="form-outline mb-4">
+                        <textarea class="form-control" id="form6Example7" rows="8"></textarea>
+                        <label class="form-label" for="form6Example7">Answer 1</label>
+                      </div>
+                        </div>
+                     </div>
+                      <br>
               
 
-                    <!-- 2 column grid layout with text inputs for the first and last names -->
-                    <div class="row mb-4">
-                      <div class="col-sm-9">
-                        <div class="form-outline">
-                          <input type="text" id="inputExQ" name="inputExQ" class="form-control" />
-                          <label class="form-label" for="inputExQ">Question 1</label>
+                <div class="row mb-2">
+                        <div class="col-sm">
+                          
+                            <button type="submit" class="btn btn-primary btn-block mb-4">Submit</button>
                         </div>
-                      </div>
-                      <div class="col-sm">
-                        <div class="form-outline">
-                          <input type="text" id="inputExM" name="inputExM" class="form-control" />
-                          <label class="form-label" for="inputExM">Marks</label>
+                        
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary btn-block sm-9">Reset</button>
                         </div>
+
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary btn-block sm-9">Leave</button>
+                        </div>
+
+
+
                       </div>
-                    </div>
-
-
-
-                <div class="row">
-
-            <button type="submit" class="btn btn-primary btn-block mb-4">Launch</button>
-            <a class="btn btn-primary btn-block mb-4" href="/teacher_home">cancel</a>
-</div>   
               
             
           
@@ -136,13 +208,7 @@
     </div>
 <br>
 <br>
-<ul>
-    <li><i class="icofont-check"></i><p>You can edit questions before 6 hrs. of exam time.</p></li><br>
-    <li><i class="icofont-check"></i><p>Clicking launch will show that you agree to obey rules & guidelines of Eishel.</p></li><br>
-    <li><i class="icofont-check"></i><p>You will be notified after exam to generate answer key and process further.</p></li><br>
-   
-    <br>
-</ul>
+
 
 
 
@@ -153,7 +219,6 @@
  <!-- End #main -->
 
   <!-- ======= Footer ======= -->
-   <!-- ======= Footer ======= -->
   <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
 
     
@@ -163,6 +228,8 @@
         <div class="row">
 
           <div class="col-lg-4 col-md-4 footer-links">
+            <h4>Useful Links</h4>
+            <ul> <div class="col-lg-4 col-md-4 footer-links">
             <h4>Useful Links</h4>
             <ul>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
@@ -195,6 +262,7 @@
 
     
   </footer><!-- End Footer -->
+
   <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 
   <!-- Vendor JS Files -->
@@ -211,6 +279,7 @@
 
   <!-- Template Main JS File -->
   <script src="static/assets/js/main.js"></script>
+
 
 </body>
 
