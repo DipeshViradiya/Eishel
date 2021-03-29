@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from Eishel_student_app.models import student_details, teacher_details, exam_details, ex_details
+from Eishel_student_app.models import student_details, teacher_details, exam_details, ex_details, ans_stu
 
 # Create your views here.
 
@@ -105,4 +105,14 @@ def exam_login(request):
     return render(request,  'exam_login.html')
 
 def student_exam(request):
+    if request.method == "POST":
+        ansbystu = request.POST.get('inputAnsStu')
+
+        ans_stu_obj = ans_stu(ans_by_stu=ansbystu)
+        ans_stu_obj.save()
+
+        return redirect('/after_exam')
     return render(request, 'student_exam.html')
+
+def after_exam(request):
+    return render(request, 'after_exam.html')

@@ -26,6 +26,11 @@ class exam_details(models.Model):
     ex_pass = models.CharField(max_length=25)
 
 class ex_details(models.Model):
-    exm_id = models.CharField(max_length=25, default="exam_dbms", primary_key=True)
+    exm_id = models.CharField(max_length=25, default="ex_dbms", primary_key=True)
     ex_q = models.CharField(max_length=100)
     ex_q_marks = models.IntegerField()
+
+class ans_stu(models.Model):
+    exam_id = models.CharField(max_length=25, default="ex_dbms", primary_key=True)
+    ex_q_no = models.IntegerField(default=1)
+    ans_by_stu = models.TextField()

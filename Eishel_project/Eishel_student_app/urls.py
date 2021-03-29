@@ -12,5 +12,6 @@ urlpatterns = [
     path("create_exam",views.create_exam, name="create_exam"),
     path("generate_questions",views.generate_questions, name="generate_questions"),
     path("student_exam",views.student_exam, name="student_exam"),
+    path("after_exam",views.after_exam, name="after_exam"),
 
 ]
