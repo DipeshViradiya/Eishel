@@ -31,6 +31,13 @@ class ex_details(models.Model):
     ex_q_marks = models.IntegerField()
 
 class ans_stu(models.Model):
-    exam_id = models.CharField(max_length=25, default="ex_dbms", primary_key=True)
+    exam_id = models.CharField(max_length=25, primary_key=True)
     ex_q_no = models.IntegerField(default=1)
     ans_by_stu = models.TextField()
+
+class ans_key_details(models.Model):
+    examm_id = models.CharField(max_length=25, primary_key=True)
+    ex_q_no = models.IntegerField(default=1)
+    ans_key_main = models.TextField()
+    ans_key_A = models.TextField()
+    ans_key_B = models.TextField()

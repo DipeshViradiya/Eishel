@@ -13,5 +13,7 @@ urlpatterns = [
     path("generate_questions",views.generate_questions, name="generate_questions"),
     path("student_exam",views.student_exam, name="student_exam"),
     path("after_exam",views.after_exam, name="after_exam"),
+    path("enter_ans_key",views.enter_ans_key, name="enter_ans_key"),
+
 
 ]
