@@ -107,8 +107,9 @@ def exam_login(request):
 def student_exam(request):
     if request.method == "POST":
         ansbystu = request.POST.get('inputAnsStu')
+        
 
-        ans_stu_obj = ans_stu(exam_id="ex_dbms", ans_by_stu=ansbystu)
+        ans_stu_obj = ans_stu(exam_id="ex_dbms",ans_by_stu=ansbystu)
         ans_stu_obj.save()
 
         return redirect('/after_exam')
