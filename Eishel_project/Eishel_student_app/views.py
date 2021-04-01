@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
-from Eishel_student_app.models import student_details, teacher_details, exam_details, ex_details, ans_stu, ans_key_details
+from Eishel_student_app.models import student_details, teacher_details, exam_details, ex_details, ans_stu, ans_key_details,temp_ans_data,temp_check_data,model_features
+
 
 #####
+
+
 import nltk
 import re
 import string
@@ -153,7 +156,7 @@ def teacher_check(request):
 
 
 
-########## ########## Feature Generation ########## ##########
+########## ########## Feature Generation ########## ########## ##################################################
 
 stopwords = stopwords.words('english')
 stemmer = PorterStemmer()
@@ -190,9 +193,9 @@ def process_text(tempstr):
 
 
 
-anskey = "This property states that a transaction must be treated as an atomic unit, that is, either all of its operations are executed or none. There must be no state in a database where a transaction is left partially completed. States should be defined either before the execution of the transaction or after the execution/abortion/failure of the transaction."
-anskeyA = "transaction must be treated as an atomic unit"
-anskeyB = "There must be no state in a database where a transaction is left partially completed"
+anskey = str(ans_key_details.objects.filter(examm_id = "ex_dbms")[0].ans_key_main)   #"This property states that a transaction must be treated as an atomic unit, that is, either all of its operations are executed or none. There must be no state in a database where a transaction is left partially completed. States should be defined either before the execution of the transaction or after the execution/abortion/failure of the transaction."
+anskeyA = str(ans_key_details.objects.filter(examm_id = "ex_dbms")[0].ans_key_A)          #"transaction must be treated as an atomic unit"
+anskeyB = str(ans_key_details.objects.filter(examm_id = "ex_dbms")[0].ans_key_B)          #"There must be no state in a database where a transaction is left partially completed"
 
 #anskeywordlist = list(anskey.split(" "))
 anskeywordlist = process_text(anskey)
@@ -337,5 +340,12 @@ def feature_generation(ansstu):
     feature_string = str(F1)+" "+str(F2)+" "+str(F3)+" "+str(F4)+" "+str(F5)+" "+str(F6)+" "+str(F7)+" "+str(F8)+" "+str(F9)
     return feature_string
 
+def feature_generation_iter(a,b):
+    for iter_data in range(a,b+1):
+        temp_ansstu = str(temp_ans_data.objects.filter(stu_id = int(iter_data))[0].stu_ans)
+        temp_feature = feature_generation(temp_ansstu)
+        temp_prediction = int(temp_check_data.objects.filter(stu_id = int(iter_data))[0].given_m)
+        temp_model_features_obj = model_features(stu_id = int(iter_data),feature_str = temp_feature, prediction_int = temp_prediction)
+        temp_model_features_obj.save()
 
-
+#feature_generation_iter(1,2)

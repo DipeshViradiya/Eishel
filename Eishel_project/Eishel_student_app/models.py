@@ -50,4 +50,7 @@ class temp_check_data(models.Model):
     stu_id = models.IntegerField(primary_key=True)
     given_m = models.IntegerField(default=1)
 
-
+class model_features(models.Model):
+    stu_id = models.IntegerField(primary_key=True)
+    feature_str = models.CharField(max_length=200)
+    prediction_int = models.IntegerField(default=1)
