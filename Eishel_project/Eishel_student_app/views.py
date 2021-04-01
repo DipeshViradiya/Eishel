@@ -1,6 +1,17 @@
 from django.shortcuts import render, redirect
 from Eishel_student_app.models import student_details, teacher_details, exam_details, ex_details, ans_stu, ans_key_details
 
+#####
+import nltk
+import re
+import string
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
+from nltk.tokenize import TweetTokenizer
+
+
+#####
+
 # Create your views here.
 
 def index(request):
@@ -129,3 +140,202 @@ def enter_ans_key(request):
 
         return redirect('/teacher_home')
     return render(request, 'teacher_enter_answer_key.html')
+
+def teacher_check(request):
+    return render(request, 'teacher_check.html')
+
+
+
+
+
+
+
+
+
+
+########## ########## Feature Generation ########## ##########
+
+stopwords = stopwords.words('english')
+stemmer = PorterStemmer()
+
+def remove_stopwords(temp):
+    templi2 = []
+    for word in temp:
+        if (word not in stopwords and
+            word not in string.punctuation):     
+            templi2.append(word)
+    return templi2
+
+def stem_li(temp):
+    templi3 = []
+    for word in temp:
+        stemmed = stemmer.stem(word)
+        templi3.append(stemmed)
+    return templi3
+    
+def process_text(tempstr):
+    
+    temp = re.sub(r'^RT[\s]+', '', tempstr)
+
+    temp = re.sub(r'https?:\/\/.*[\r\n]*', '', temp)
+    temp = re.sub(r'#', '', temp)
+    print(temp)
+    templi = list(temp.split(" "))
+    templi2 = remove_stopwords(templi)
+    templi3 = stem_li(templi2)
+    return templi3    
+
+
+
+
+
+
+anskey = "This property states that a transaction must be treated as an atomic unit, that is, either all of its operations are executed or none. There must be no state in a database where a transaction is left partially completed. States should be defined either before the execution of the transaction or after the execution/abortion/failure of the transaction."
+anskeyA = "transaction must be treated as an atomic unit"
+anskeyB = "There must be no state in a database where a transaction is left partially completed"
+
+#anskeywordlist = list(anskey.split(" "))
+anskeywordlist = process_text(anskey)
+anskeysenlist = list(anskey.split("."))
+#anskeyAlist = list(anskeyA.split(" "))
+anskeyAlist = process_text(anskeyA)
+anskeyAsenlist = list(anskeyA.split("."))
+#anskeyBlist = list(anskeyB.split(" "))
+anskeyBlist = process_text(anskeyB)
+anskeyBsenlist = list(anskeyB.split("."))
+anskeyCsenlist = []
+for templist in anskeysenlist:
+    if ((templist not in anskeyAsenlist)and(templist not in anskeyBsenlist)):
+        anskeyCsenlist.append(templist)
+
+m = len(anskeywordlist)
+a = len(anskeyAlist)
+b = len(anskeyBlist)
+
+msen = len(anskeysenlist)
+asen = len(anskeyAsenlist)
+bsen = len(anskeyBsenlist)
+csen = len(anskeyCsenlist)
+
+def feature_generation(ansstu):
+    # returns features as F1 F2 F3 F4 F5 F6 F7 F8 F9
+    
+    #ansstulist = list(ansstu.split(" "))
+    ansstulist = process_text(ansstu)
+    ansstusenlist = list(ansstu.split("."))
+
+    stm = len(ansstulist)
+    stmsen = len(ansstusenlist)
+    
+    countA = 0
+    countB = 0
+    countC = 0
+    countD = 0
+
+    countsenA = 0
+    countsenB = 0
+    countsenC = 0
+    countsenD = 0
+
+    ansstuA = []
+    ansstuB = []
+    ansstuC = []
+    ansstuD = []
+
+    occumlist = [0]*msen
+    occualist = [0]*asen
+    occublist = [0]*bsen
+    occuclist = [0]*csen
+
+    for word in ansstulist:
+        if word in anskeyAlist:
+            countA += 1
+            ansstuA.append(word)
+        if word in anskeyBlist:
+            countB += 1
+            ansstuB.append(word)
+        if ((word in anskeywordlist)and((word not in anskeyAlist)and(word not in anskeyBlist))):
+            countC += 1
+            ansstuC.append(word)
+        if word not in anskeywordlist:
+            countD += 1
+            ansstuD.append(word)
+
+    # FEATURES
+    F1 = countA / a
+    F2 = countB / b 
+    F3 = countC / (m-a-b)
+    F4 = countD / stm
+
+    for listA in anskeyAsenlist:
+        for word in ansstulist:
+            if word in listA:
+                occualist[countsenA] += 1
+        countsenA += 1
+     
+    for listB in anskeyBsenlist:
+        for word in ansstulist:
+            if word in listB:
+                occublist[countsenB] += 1
+        countsenB += 1
+
+
+    for listC in anskeyCsenlist:
+        for word in ansstulist:
+            if word in listC:
+                occuclist[countsenC] += 1
+        countsenC += 1
+
+    
+    countoccua = 0
+    for occuanum in occualist:
+        temp = anskeyAsenlist[countoccua]
+        lentemp = len(temp)
+        if occualist[countoccua] != 0:
+            occualist[countoccua] /= lentemp
+        countoccua += 1
+    #print(occualist)
+        
+    countoccub = 0
+    for occubnum in occublist:
+        temp = anskeyBsenlist[countoccub]
+        lentemp = len(temp)
+        if occublist[countoccub] != 0:
+            occublist[countoccub] /= lentemp
+        countoccub += 1
+    #print(occublist)
+        
+    countoccuc = 0
+    for occucnum in occuclist:
+        temp = anskeyCsenlist[countoccuc]
+        lentemp = len(temp)
+        if occuclist[countoccuc] != 0:
+            occuclist[countoccuc] /= lentemp
+        countoccuc += 1
+    #print(occuclist)
+
+    f5 = 0
+    for num in range(0,(len(occualist)-1)):
+        if occualist[num] >= 0.1:
+            f5 += 1
+    f6 = 0
+    for num in range(0,(len(occublist)-1)):
+        if occublist[num] >= 0.1:
+            f6 += 1
+    f7 = 0
+    for num in range(0,(len(occuclist)-1)):
+        if occuclist[num] >= 0.1:
+            f7 += 1
+
+    #FEATURES
+    F5 = f5 / asen
+    F6 = f6 / bsen
+    F7 = f7 / csen
+    F8 = stm / m
+    F9 = stmsen / msen
+
+    feature_string = str(F1)+" "+str(F2)+" "+str(F3)+" "+str(F4)+" "+str(F5)+" "+str(F6)+" "+str(F7)+" "+str(F8)+" "+str(F9)
+    return feature_string
+
+
+

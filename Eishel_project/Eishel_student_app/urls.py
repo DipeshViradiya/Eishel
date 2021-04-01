@@ -14,6 +14,7 @@ urlpatterns = [
     path("student_exam",views.student_exam, name="student_exam"),
     path("after_exam",views.after_exam, name="after_exam"),
     path("enter_ans_key",views.enter_ans_key, name="enter_ans_key"),
+    path("teacher_check",views.teacher_check, name="teacher_check"),
 
 
 ]

@@ -41,3 +41,13 @@ class ans_key_details(models.Model):
     ans_key_main = models.TextField()
     ans_key_A = models.TextField()
     ans_key_B = models.TextField()
+
+class temp_ans_data(models.Model):
+    stu_id = models.IntegerField(primary_key=True)
+    stu_ans = models.TextField()
+
+class temp_check_data(models.Model):
+    stu_id = models.IntegerField(primary_key=True)
+    given_m = models.IntegerField(default=1)
+
+
