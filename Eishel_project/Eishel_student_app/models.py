@@ -54,3 +54,7 @@ class model_features(models.Model):
     stu_id = models.IntegerField(primary_key=True)
     feature_str = models.CharField(max_length=200)
     prediction_int = models.IntegerField(default=1)
+
+class secondary_key_data(models.Model):
+    ex_id = models.CharField(max_length=25, primary_key=True)
+    secondary_key = models.TextField()
