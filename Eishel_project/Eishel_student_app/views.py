@@ -508,6 +508,15 @@ def feature_generation_test(ansstu):
     feature_string = str(F1)+" "+str(F2)+" "+str(F3)+" "+str(F4)+" "+str(F5)+" "+str(F6)+" "+str(F7)+" "+str(F8)+" "+str(F9)
     return feature_string
 
+
+def feature_generation_iter_test(a,b):
+    for iter_data in range(a,b+1):
+        temp_ansstu = str(temp_ans_data.objects.filter(stu_id = int(iter_data))[0].stu_ans)
+        temp_feature = feature_generation_test(temp_ansstu)
+        temp_prediction = int(temp_check_data.objects.filter(stu_id = int(iter_data))[0].given_m)
+        temp_model_features_obj = model_features(stu_id = int(iter_data),feature_str = temp_feature, prediction_int = temp_prediction)
+        temp_model_features_obj.save()
+
 #file_f = open(r"C:\Users\as\Desktop\Eishel\FEATURES\features.txt", "a") 
 def feature_to_csv(a,b):
     for i in range(a,b+1):
@@ -515,11 +524,13 @@ def feature_to_csv(a,b):
         temp_f = str(model_features_obj.feature_str)
         temp_p = str(model_features_obj.prediction_int)
         temp_f_str = temp_f.replace(" ",",")
+        
         final_str = str(temp_f_str) + "," + str(temp_p) + ",\n"
         file_f.write(final_str)
         
 
-#feature_to_csv(1,50)
-#file_f.close()
-#feature_generation_iter(1,50)
+#feature_generation_iter(81,100)
 #store_secondary_data(secondary_knowledge)
+
+#feature_to_csv(81,100)
+#file_f.close()
