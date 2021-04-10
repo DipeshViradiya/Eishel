@@ -65,7 +65,7 @@ def teacher_login(request):
         password = request.POST.get('inputPassword')
 
         test = teacher_details.objects.filter(tc_email = email)[0]
-        test_pass = test.tc_pass
+        test_pass = str(test.tc_pass)
         if password==test_pass:
             return redirect('/teacher_home')
         return redirect('/teacher_home')
@@ -357,7 +357,7 @@ def feature_generation_train(ansstu):
 def feature_generation_iter(a,b):
     for iter_data in range(a,b+1):
         temp_ansstu = str(temp_ans_data.objects.filter(stu_id = int(iter_data))[0].stu_ans)
-        temp_feature = feature_generation_train(temp_ansstu)
+        temp_feature = feature_generation_test(temp_ansstu)
         temp_prediction = int(temp_check_data.objects.filter(stu_id = int(iter_data))[0].given_m)
         temp_model_features_obj = model_features(stu_id = int(iter_data),feature_str = temp_feature, prediction_int = temp_prediction)
         temp_model_features_obj.save()
@@ -517,7 +517,7 @@ def feature_generation_iter_test(a,b):
         temp_model_features_obj = model_features(stu_id = int(iter_data),feature_str = temp_feature, prediction_int = temp_prediction)
         temp_model_features_obj.save()
 
-#file_f = open(r"C:\Users\as\Desktop\Eishel\FEATURES\features.txt", "a") 
+#file_f = open(r"C:\Users\as\Desktop\Eishel\FEATURES\featuresF.txt", "a") 
 def feature_to_csv(a,b):
     for i in range(a,b+1):
         model_features_obj = model_features.objects.filter(stu_id = i)[0]
@@ -529,7 +529,7 @@ def feature_to_csv(a,b):
         file_f.write(final_str)
         
 
-#feature_generation_iter(81,100)
+#feature_generation_iter_test(81,100)
 #store_secondary_data(secondary_knowledge)
 
 #feature_to_csv(81,100)
